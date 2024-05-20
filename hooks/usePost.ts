@@ -13,3 +13,5 @@ export const usePost = (id: string) => {
         queryFn: () => fetchPost(id), // Pass the fetch function
     });
 };
+
+
