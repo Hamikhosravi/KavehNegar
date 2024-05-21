@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import {postRequest} from "../utils/axios-utils";
 import { Post } from '../interfaces/post';
 
 const fetchPost = async (id: string): Promise<Post> => {
-    const { data } = await axios.get<Post>(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    return data;
+    return await postRequest<Post>({ url: `/posts/${id}` });
 };
 
 export const usePost = (id: string) => {
@@ -13,5 +12,4 @@ export const usePost = (id: string) => {
         queryFn: () => fetchPost(id), // Pass the fetch function
     });
 };
-
 

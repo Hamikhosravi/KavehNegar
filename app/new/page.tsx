@@ -26,23 +26,25 @@ export default function NewPostPage() {
             {message && <p>{message}</p>}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block">Title</label>
+                    <label className="block">Title
                     <input
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="border p-2 w-full"
+                        className="border p-2 w-full text-black"
                         required
                     />
+                    </label>
                 </div>
                 <div>
-                    <label className="block">Body</label>
+                    <label className="block">Body
                     <textarea
                         value={body}
                         onChange={(e) => setBody(e.target.value)}
-                        className="border p-2 w-full"
+                        className="border p-2 w-full text-black"
                         required
                     />
+                    </label>
                 </div>
                 <button type="submit" className="bg-blue-500 text-white p-2">
                     Submit

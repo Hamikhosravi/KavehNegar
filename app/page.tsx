@@ -1,9 +1,9 @@
 "use client";
 
-import Link from 'next/link';
 import { usePosts } from '../hooks/usePosts';
 import { Post } from "../interfaces/post";
 import React from "react";
+import CardPost from "../components/PostCard"
 
 export default function HomePage() {
     const { data, error, isLoading } = usePosts();
@@ -15,14 +15,10 @@ export default function HomePage() {
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold">Posts</h1>
-            <ul>
+            <h1 className="text-2xl font-bold text-center">Posts</h1>
+            <ul className="flex justify-center sm:justify-evenly items-center flex-wrap">
                 {data.map((post: Post) => (
-                    <li key={post.id} className="my-2">
-                        <Link href={`/posts/${post.id}`} className="text-blue-500 hover:underline">
-                            {post.title}
-                        </Link>
-                    </li>
+                    <CardPost id={post.id} title={post.title} key={post.id}/>
                 ))}
             </ul>
         </div>
