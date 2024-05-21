@@ -16,4 +16,6 @@ const PostCard = memo(({ id, title }: PostProps) => {
     );
 });
 
+PostCard.displayName = 'PostCard';
+
 export default PostCard;

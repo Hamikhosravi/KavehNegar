@@ -33,4 +33,6 @@ const MessagePortal = memo(({ message, onClose }: MessagePortalProps) => {
     );
 });
 
+MessagePortal.displayName = 'Modal';
+
 export default MessagePortal;

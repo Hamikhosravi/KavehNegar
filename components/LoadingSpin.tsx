@@ -12,4 +12,6 @@ const LoadingSpin = memo(() => {
     );
 });
 
+LoadingSpin.displayName = 'LoadingSpin';
+
 export default LoadingSpin;
