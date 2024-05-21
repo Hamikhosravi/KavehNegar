@@ -17,7 +17,7 @@ function RootLayout({ children }: ChildrenProps) {
         <body>
         <QueryClientProvider client={queryClient}>
             <Header />
-            {children}
+            <section className="container mx-auto p-4 min-h-[90vh]">{children}</section>
         </QueryClientProvider>
         </body>
         </html>
