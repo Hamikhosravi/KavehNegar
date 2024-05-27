@@ -11,9 +11,7 @@ const Form = memo(forwardRef<HTMLFormElement, FormProps>(function Form({ onSave,
     const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        // Create an empty array to collect the entries
         const formEntries: [string, FormDataEntryValue][] = [];
-        // Populate the array with the entries from formData
         formData.forEach((value, key) => {
             formEntries.push([key, value]);
         });
