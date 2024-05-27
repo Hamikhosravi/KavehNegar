@@ -1,4 +1,5 @@
-import React, { forwardRef, FormEvent, ComponentPropsWithoutRef, ReactNode, useCallback, memo } from 'react';
+import { forwardRef, FormEvent, ComponentPropsWithoutRef, ReactNode, useCallback, memo } from 'react';
+import * as React from "react";
 
 type FormProps = {
     onSave: (event: FormEvent<HTMLFormElement>, data: unknown) => void;
@@ -10,7 +11,13 @@ const Form = memo(forwardRef<HTMLFormElement, FormProps>(function Form({ onSave,
     const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        const data = Object.fromEntries(formData);
+        // Create an empty array to collect the entries
+        const formEntries: [string, FormDataEntryValue][] = [];
+        // Populate the array with the entries from formData
+        formData.forEach((value, key) => {
+            formEntries.push([key, value]);
+        });
+        const data = Object.fromEntries(formEntries);
         onSave(event, data);
     }, [onSave]);
 
