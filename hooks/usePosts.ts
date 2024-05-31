@@ -1,3 +1,4 @@
+// hooks/usePosts.ts
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { Post } from '../interfaces/post';
 import { postRequest } from "../utils/axios-utils";
@@ -7,15 +8,12 @@ const fetchPosts = async (): Promise<Post[]> => {
     return await postRequest<Post[]>({ url: '/posts' });
 };
 
-export const usePosts = (): UseQueryResult<Post[], Error> => {
-    const fetchPostsMemoized = useMemo(
-        () => fetchPosts,
-        []
-    );
+export const usePosts = (initialData?: Post[]): UseQueryResult<Post[], Error> => {
+    const fetchPostsMemoized = useMemo(() => fetchPosts, []);
 
     return useQuery<Post[], Error>({
         queryKey: ['posts'],
-        queryFn: fetchPostsMemoized
+        queryFn: fetchPostsMemoized,
+        initialData, // Pass initial data to the useQuery hook
     });
 };
-

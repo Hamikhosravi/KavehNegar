@@ -1,30 +1,23 @@
-"use client";
+import React from 'react';
+import { notFound } from 'next/navigation';
+import { postRequest } from '../../../utils/axios-utils';
+import PostPage from '../../../components/PostPage'; // Import the client component if you have it separately
+import { Post } from '../../../interfaces/post'; // Adjust the path as necessary
 
-import { useRouter } from "next/navigation";
-import { usePost } from '../../../hooks/usePost';
-import React from "react";
-import LoadingSpin from "../../../components/LoadingSpin";
+const PostPageServer = async ({ params }: { params: { id: string } }) => {
+    let post: Post | null = null;
 
-type paramsProps = {
-    params:{id: string;}
-}
+    try {
+        post = await postRequest<Post>({ url: `/posts/${params.id}` });
+    } catch (error) {
+        console.error('Failed to fetch post:', error);
+    }
 
-export default function PostPage({ params }: paramsProps) {
-    const router = useRouter();
-    const { data, error, isLoading } = usePost(params.id);
+    if (!post) {
+        notFound();
+    }
 
-    if (isLoading) return <LoadingSpin />;
-    if (error) return <div>Error: {error.message}</div>;
+    return <PostPage post={post} />;
+};
 
-    if (!data) return <div>No data found</div>; // Add this check to handle undefined data
-
-    return (
-        <>
-            <h1 className="text-2xl font-bold">{data.title}</h1>
-            <p>{data.body}</p>
-            <button onClick={()=>router.push("/")} className="rounded bg-blue-500 text-white px-3 py-2 mt-4">
-                Go Back
-            </button>
-        </>
-    );
-}
+export default PostPageServer;

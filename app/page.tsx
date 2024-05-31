@@ -1,27 +1,19 @@
-"use client";
-
-import { usePosts } from '../hooks/usePosts';
+// app/page.tsx
 import { Post } from "../interfaces/post";
+import ClientComponent from "../components/ClientComponent";
+import { postRequest } from "../utils/axios-utils";
 import React from "react";
-import CardPost from "../components/PostCard"
-import LoadingSpin from "../components/LoadingSpin";
 
-export default function HomePage() {
-    const { data, error, isLoading } = usePosts();
+const HomePage = async () => {
+    let initialPosts: Post[] = [];
 
-    if (isLoading) return <LoadingSpin />;
-    if (error) return <div>Error: {error.message}</div>;
+    try {
+        initialPosts = await postRequest<Post[]>({ url: '/posts' });
+    } catch (error) {
+        console.error("Failed to fetch initial posts:", error);
+    }
 
-    if (!data) return <div>No data found</div>; // Add this check to handle undefined data
+    return <ClientComponent initialPosts={initialPosts} />;
+};
 
-    return (
-        <>
-            <h1 className="text-2xl font-bold text-center">Posts</h1>
-            <ul className="flex justify-center sm:justify-evenly items-center flex-wrap">
-                {data.map((post: Post) => (
-                    <CardPost id={post.id} title={post.title} key={post.id}/>
-                ))}
-            </ul>
-        </>
-    );
-}
+export default HomePage;
